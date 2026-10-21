@@ -15,6 +15,8 @@ from pathlib import Path
 
 import webview
 
+from {{cookiecutter.python_package}} import Api
+
 
 def get_target_window_size(scale=0.8):
     """Calculates window size as a percentage of the primary monitor resolution."""
@@ -31,6 +33,9 @@ def main():
     parser.add_argument("-d", "--debug", action="store_true", help="Open inspection panel.")
     args = parser.parse_args()
 
+    # Initialize API instance
+    api = Api()
+
     win_width, win_height = get_target_window_size(scale=0.8)
 
     # Get absolute path to the built in dex.html
@@ -43,6 +48,7 @@ def main():
         url=dist_path,
         width=win_width,
         height=win_height,
+        js_api=api,
     )
 
     webview.start(debug=args.debug)
