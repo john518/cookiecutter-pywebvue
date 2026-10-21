@@ -24,7 +24,7 @@ def main():
   print(f"Starting desktop window pointing to {dist_path}...")
 
   window = webview.create_window(
-      title="{{project_name}}",
+      title="{{cookiecutter.project_name}}",
       url=dist_path,
       width=1200,
       height=800,

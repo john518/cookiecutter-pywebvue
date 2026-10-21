@@ -1,4 +1,4 @@
-# {{project_name}}
+# {{cookiecutter.project_name}}
 
 A lightweight, high-performance desktop application built with Python (`pywebview`), a native local backend, and a Vue/Vite reactive UI (`ui/`).
 
@@ -29,7 +29,7 @@ Use the provided build and execution script to compile the frontend assets and l
 
 Development
 
-    Backend: Python logic lives in {{project_name_safe}}/
+    Backend: Python logic lives in {{cookiecutter.project_slug}}/
 
     Frontend: Vue/Vite source code lives in ui/
 

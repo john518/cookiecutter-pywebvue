@@ -20,7 +20,7 @@ def main():
   print("Creating Python virtual environment (.venv) with system site-packages...")
   try:
     subprocess.run(
-        ["uv", "venv", "--system-site-packages", ".venv"],
+        ["uv", "venv", "--python", "/usr/bin/python3", "--system-site-packages", ".venv"],
         check=True,
     )
     subprocess.run(["uv", "sync"], check=True)
@@ -46,25 +46,14 @@ def main():
     ui_dir = project_root / "ui"
     vite_config_path = ui_dir / "vite.config.js"
     vite_config_content = """import { defineConfig } from 'vite'
-import vue from '@sveltejs/vite-plugin-svelte' // (or vue plugin below)
-import vuePlugin from '@vitejs/plugin-vue'
+    import vue from '@vitejs/plugin-vue'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [vuePlugin()],
-  base: './',
-})
-"""
-    # Clean standard Vue Vite config
-    vite_config_content = """import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  base: './',
-})
-"""
+    // https://vite.dev/config/
+    export default defineConfig({
+        plugins: [vue()],
+        base: './',
+    })
+    """
     vite_config_path.write_text(vite_config_content, encoding="utf-8")
 
     print("Installing frontend node modules...")
@@ -79,7 +68,7 @@ export default defineConfig({
   # 4. Initialize Git repository and make initial commit
   print("Initializing Git repository...")
   subprocess.run(["git", "init"], capture_output=True)
-  subprocess.run(["git", "add", "."], capture_output=True)
+  subprocess.run(["git", "add", "README.md", "LICENSE"], capture_output=True)
 
   name_check = subprocess.run(
       ["git", "config", "user.name"], capture_output=True, text=True
