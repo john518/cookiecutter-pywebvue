@@ -8,8 +8,8 @@ and initializes a Git repository.
 """
 
 from pathlib import Path
+import shutil
 import subprocess
-import sys
 
 
 def main():
@@ -66,8 +66,30 @@ export default defineConfig({
         )
 
 
+    # 4. Overwrite UI code
+    print("Configuring example UI...")
+    source_root = Path(__file__).resolve().parent.parent
+    resources_dir = source_root / "resources"
 
-    # 4. Initialize Git repository and make initial commit
+    ui_dir = project_root / "ui"
+
+    src_dir = ui_dir / "src"
+    for filename in ["App.vue", "style.css"]:
+        from_path = resources_dir / filename
+        shutil.copy(from_path, src_dir)
+
+    component_dir = src_dir / "components"
+    for filename in ["HelloWorld.vue"]:
+        from_path = resources_dir / filename
+        shutil.copy(from_path, component_dir)
+
+    assets_dir = src_dir / "assets"
+    for filename in ["logo.svg"]:
+        from_path = resources_dir / filename
+        shutil.copy(from_path, assets_dir)
+
+
+    # 5. Initialize Git repository and make initial commit
     print("Initializing Git repository...")
     subprocess.run(["git", "init"], capture_output=True)
     subprocess.run(["git", "add", "README.md", "LICENSE"], capture_output=True)
