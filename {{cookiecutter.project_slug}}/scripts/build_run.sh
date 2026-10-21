@@ -9,4 +9,4 @@ cd "$ROOT_DIR"
 npm --prefix ui run build
 
 # Run the python desktop application entry point
-PYTHONPATH=. ./.venv/bin/python -u {{cookiecutter.python_package}}/main.py
+PYTHONPATH=. ./.venv/bin/python -u {{cookiecutter.python_package}}/main.py "$@"

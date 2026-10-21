@@ -10,27 +10,42 @@ or static production build files.
 # ]
 # ///
 
-import sys
+import argparse
 from pathlib import Path
 
 import webview
 
 
+def get_target_window_size(scale=0.8):
+    """Calculates window size as a percentage of the primary monitor resolution."""
+    screen = webview.screens[0]
+    width = int(screen.width * scale)
+    height = int(screen.height * scale)
+
+    return width, height
+
+
 def main():
-  """Initialize and start the pywebview desktop window."""
-  # Get absolute path to the built index.html
-  dist_path = Path("ui/dist/index.html").resolve().as_uri()
+    """Initialize and start the pywebview desktop window."""
+    parser = argparse.ArgumentParser(description="Starts the application")
+    parser.add_argument("-d", "--debug", action="store_true", help="Open inspection panel.")
+    args = parser.parse_args()
 
-  print(f"Starting desktop window pointing to {dist_path}...")
+    win_width, win_height = get_target_window_size(scale=0.8)
 
-  window = webview.create_window(
-      title="{{cookiecutter.project_name}}",
-      url=dist_path,
-      width=1200,
-      height=800,
-  )
+    # Get absolute path to the built in dex.html
+    dist_path = Path("ui/dist/index.html").resolve().as_uri()
 
-  webview.start(debug=True)
+    print(f"Starting desktop window pointing to {dist_path}...")
+
+    _ = webview.create_window(
+        title="{{cookiecutter.project_name}}",
+        url=dist_path,
+        width=win_width,
+        height=win_height,
+    )
+
+    webview.start(debug=args.debug)
 
 
 if __name__ == "__main__":
