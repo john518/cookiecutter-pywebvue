@@ -1,5 +1,7 @@
 # cookiecutter-pywebvue
 
+<img src="./resources/logo.svg" width="64" height="64" alt="Logo" />
+
 `cookiecutter-pywebvue` is a lightweight, high-performance Cookiecutter template for bootstrapping custom desktop applications using **Python (`pywebview`)** and a **Vue.js / Vite** frontend. 
 
 It is designed as a modern, resource-efficient alternative to heavy Electron-based desktop apps, leveraging native OS web-rendering bindings and fast modern tooling.
