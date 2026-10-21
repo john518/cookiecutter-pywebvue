@@ -76,14 +76,21 @@ def main():
   if not name_check.stdout.strip():
     print(
         "NOTE: Git user.name/email not globally configured. Skipping initial"
-        " commit step."
+        " commit steps."
     )
   else:
     subprocess.run(
-        ["git", "commit", "-m", f"Initial commit for {project_root.name}"],
+        ["git", "commit", "-m", f"docs: initial commit for {project_root.name}"],
         capture_output=True,
     )
     print("Successfully created initial Git commit with README and license!")
+
+    subprocess.run(["git", "add", "."], capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", f"feat: commit project files for {project_root.name}"],
+        capture_output=True,
+    )
+    print("Successfully added project files to git!")
 
   print(f"\nSUCCESS: Project '{project_root.name}' is fully set up and ready!")
   print("  cd <project-name>")
