@@ -8,6 +8,7 @@ class Api:
 
     def ping(self) -> dict:
         """Health check endpoint to verify backend is responsive."""
+        # print("Enter ping()")
         return {
             "status": "ok",
             "timestamp": datetime.now().isoformat()

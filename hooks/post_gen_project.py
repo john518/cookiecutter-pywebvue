@@ -11,6 +11,13 @@ from pathlib import Path
 import shutil
 import subprocess
 
+# Because the "post gen" script runs from the repo root directory,
+# and `cookiecutter._repo_dir` is relative to the starting directory,
+# the repo_dir is relative to the parent of the current working directory
+repo_dir = "{{ cookiecutter._repo_dir }}"
+repo_path = Path.cwd().parent / repo_dir
+TEMPLATE_ROOT = repo_path
+
 
 def main():
     project_root = Path.cwd()
@@ -68,9 +75,7 @@ export default defineConfig({
 
     # 4. Overwrite UI code
     print("Configuring example UI...")
-    source_root = Path(__file__).resolve().parent.parent
-    resources_dir = source_root / "resources"
-
+    resources_dir = TEMPLATE_ROOT / "resources"
     ui_dir = project_root / "ui"
 
     src_dir = ui_dir / "src"
@@ -78,10 +83,10 @@ export default defineConfig({
         from_path = resources_dir / filename
         shutil.copy(from_path, src_dir)
 
-    component_dir = src_dir / "components"
+    components_dir = src_dir / "components"
     for filename in ["HelloWorld.vue"]:
         from_path = resources_dir / filename
-        shutil.copy(from_path, component_dir)
+        shutil.copy(from_path, components_dir)
 
     assets_dir = src_dir / "assets"
     for filename in ["logo.svg"]:
@@ -117,7 +122,7 @@ export default defineConfig({
         print("Successfully added project files to git!")
 
     print(f"\nSUCCESS: Project '{project_root.name}' is fully set up and ready!")
-    print("  cd <project-name>")
+    print("cd {{ cookiecutter.project_name }}")
     print("  ./scripts/build_run.sh\n")
 
 

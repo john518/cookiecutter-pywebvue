@@ -15,7 +15,7 @@ from pathlib import Path
 
 import webview
 
-from {{cookiecutter.python_package}} import Api
+from {{cookiecutter.python_package}}.api import Api
 
 
 def get_target_window_size(scale=0.8):
