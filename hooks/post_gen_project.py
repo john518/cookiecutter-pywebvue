@@ -73,7 +73,7 @@ export default defineConfig({
         )
 
 
-    # 4. Overwrite UI code
+    # 4. Overwrite UI code with simpler example
     print("Configuring example UI...")
     resources_dir = TEMPLATE_ROOT / "resources"
     ui_dir = project_root / "ui"
@@ -94,7 +94,13 @@ export default defineConfig({
         shutil.copy(from_path, assets_dir)
 
 
-    # 5. Initialize Git repository and make initial commit
+    # 5. Remove unused files
+    for filename in ["hero.png", "vite.svg", "vue.svg"]:
+        rm_path = assets_dir / filename
+        Path(rm_path).unlink(missing_ok=True)
+
+
+    # 6. Initialize Git repository and make initial commit
     print("Initializing Git repository...")
     subprocess.run(["git", "init"], capture_output=True)
     subprocess.run(["git", "add", "README.md", "LICENSE"], capture_output=True)
