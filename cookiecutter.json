@@ -3,5 +3,10 @@
   "project_slug": "{{ cookiecutter.project_name | lower | replace(' ', '-') | replace('_', '-') }}",
   "python_package": "{{ cookiecutter.project_slug | lower | replace('-', '_') }}",
   "description": "A lightweight pywebview desktop app with Vue/Vite UI",
-  "author": "Your Name"
+  "author": "Your Name",
+
+  "_copy_without_render": [
+    "{{cookiecutter.python_package}}/platforms/*",
+    "*.svg"
+  ]
 }

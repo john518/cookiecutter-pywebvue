@@ -16,6 +16,8 @@ from pathlib import Path
 import webview
 
 from {{cookiecutter.python_package}}.api import Api
+from {{cookiecutter.python_package}}.platforms import setup_window_features
+
 
 
 def get_target_window_size(scale=0.8):
@@ -43,13 +45,20 @@ def main():
 
     print(f"Starting desktop window pointing to {dist_path}...")
 
-    _ = webview.create_window(
-        title="{{cookiecutter.project_name}}",
+    title = "{{cookiecutter.project_name}}"
+    window = webview.create_window(
+        title=title,
         url=dist_path,
         width=win_width,
         height=win_height,
         js_api=api,
     )
+
+    # Apply window styling
+    # See platform-specific file to see how to register icon_name
+    slate_teal_gray = "#8c969b"
+    setup_window_features(
+        window, title, bg_color=slate_teal_gray, title_color="white", icon_name="")
 
     webview.start(debug=args.debug)
 
