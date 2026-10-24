@@ -27,7 +27,7 @@ def main():
     print("Creating Python virtual environment (.venv) with system site-packages...")
     try:
         subprocess.run(
-            ["uv", "venv", "--python", "/usr/bin/python3", "--system-site-packages", ".venv"],
+            ["uv", "venv", "--python", "3.14", "--system-site-packages", ".venv"],
             check=True,
         )
         subprocess.run(["uv", "sync"], check=True)
