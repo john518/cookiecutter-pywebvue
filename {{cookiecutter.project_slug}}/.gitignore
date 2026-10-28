@@ -8,6 +8,8 @@ build/
 *.egg-info/
 
 # Node / Frontend
+ui/READEME.md
+ui/_gitignore
 ui/node_modules/
 ui/dist/
 ui/.vite/
