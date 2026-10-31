@@ -11,6 +11,8 @@ from pathlib import Path
 import shutil
 import subprocess
 
+PROJECT_NAME = "{{ cookiecutter.project_name }}"
+
 # Because the "post gen" script runs from the repo root directory,
 # and `cookiecutter._repo_dir` is relative to the starting directory,
 # the repo_dir is relative to the parent of the current working directory
@@ -73,22 +75,36 @@ export default defineConfig({
         )
 
 
-    # 4. Overwrite UI code with simpler example
+    # 4. Overwrite UI code with simple example
     print("Configuring example UI...")
     resources_dir = TEMPLATE_ROOT / "resources"
     ui_dir = project_root / "ui"
 
     src_dir = ui_dir / "src"
-    for filename in ["App.vue", "style.css"]:
+    src_dir.mkdir(parents=True, exist_ok=True)
+
+    # Render App.vue to src_dir
+    filename = "App.vue"
+    source_file = resources_dir / filename
+    destination_file = src_dir / filename
+
+    content = source_file.read_text()
+    content = content.replace("@PROJECT_NAME@", PROJECT_NAME)
+    destination_file.write_text(content)
+
+    # Copy rest of src_dir files
+    for filename in ["style.css"]:
         from_path = resources_dir / filename
         shutil.copy(from_path, src_dir)
 
     components_dir = src_dir / "components"
+    components_dir.mkdir(parents=True, exist_ok=True)
     for filename in ["HelloWorld.vue"]:
         from_path = resources_dir / filename
         shutil.copy(from_path, components_dir)
 
     assets_dir = src_dir / "assets"
+    assets_dir.mkdir(parents=True, exist_ok=True)
     for filename in ["logo.svg"]:
         from_path = resources_dir / filename
         shutil.copy(from_path, assets_dir)
