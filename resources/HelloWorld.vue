@@ -5,7 +5,15 @@ import pywebvueLogo from '../assets/logo.svg'
 const count = ref(0)
 const apiStatus = ref("")
 
+// DO NOT USE `onMounted` METHOD FOR ANY `window.pywebview.api` CALLS ==> API IS *NOT* READY
+// Call onBackendReady from parent component to avoid race condition with pywebview backend
+const onBackendReady = async () => {
+  await checkApi()
+}
+defineExpose({ onBackendReady })  // expose function to parent component
+
 async function checkApi() {
+  console.debug("Enter checkApi()")
   try {
     apiStatus.value = 'Pinging...'
     const pong = await window.pywebview.api.ping()

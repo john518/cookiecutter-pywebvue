@@ -1,10 +1,13 @@
 <template>
-  <div v-if="!isReady" class="splash-screen">
+  <!-- Splash screen hidden via CSS when ready -->
+  <div v-show="!isReady" class="splash-screen">
     <div class="spinner-container">
       <p>Starting {{ projectName }}...</p>
     </div>
   </div>
-  <HelloWorld v-else />
+
+  <!-- Child component is rendered immediately in the background, keeping childRef valid -->
+  <HelloWorld ref="childRef" v-show="isReady" />
 </template>
 
 <script setup>
@@ -13,6 +16,7 @@ import HelloWorld from './components/HelloWorld.vue'
 
 const projectName = ref("@PROJECT_NAME@")
 const isReady = ref(false)
+const childRef = ref(null)
 
 onMounted(async () => {
   // Wait for Python-Javascript bridge to be initialized and ready
@@ -26,7 +30,15 @@ onMounted(async () => {
         if (response && response.status === 'ok') {
           // await new Promise(resolve => setTimeout(resolve, 1000))  // for debug only
 
-          isReady.value = true
+          isReady.value = true  // display the child component
+
+          // Call onBackendReady method on child component
+          if (childRef.value) {
+            childRef.value.onBackendReady()
+          }
+          else {
+            console.error("childRef component is not mounted => cannot proceed")
+          }
           return
         }
       } catch (e) {
