@@ -27,7 +27,7 @@ async function checkApi() {
 
 <template>
   <div class="main">
-    <h1>HelloWorld.vue</h1>
+    <h1>Main.vue</h1>
 
     <div>
       <button type="button" class="counter" @click="count++">
