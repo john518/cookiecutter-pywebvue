@@ -73,7 +73,7 @@ my-desktop-app/
 ├── pyproject.toml
 ├── <python_package>/
 │   ├── __init__.py
-│   └── main.py
+│   └── my-desktop-app.py
 ├── scripts/
 │   └── build_run.sh
 └── ui/
