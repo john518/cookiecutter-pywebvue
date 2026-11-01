@@ -99,7 +99,7 @@ export default defineConfig({
 
     components_dir = src_dir / "components"
     components_dir.mkdir(parents=True, exist_ok=True)
-    for filename in ["HelloWorld.vue"]:
+    for filename in ["Main.vue"]:
         from_path = resources_dir / filename
         shutil.copy(from_path, components_dir)
 

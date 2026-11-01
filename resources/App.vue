@@ -7,12 +7,12 @@
   </div>
 
   <!-- Child component is rendered immediately in the background, keeping childRef valid -->
-  <HelloWorld ref="childRef" v-show="isReady" />
+  <Main ref="childRef" v-show="isReady" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import Main from './components/Main.vue'
 
 const projectName = ref("@PROJECT_NAME@")
 const isReady = ref(false)
